@@ -2,12 +2,14 @@ function Get-Version {
     $PSVersionTable.PSVersion
 }
 
-function Get-Meny{
+function Get-Meny
+{
 	echo "\n\n"
 	echo " - Lage OUer (1)"
 	echo " - Slette OUer (2)"
 	echo " - Connecte til andre hosts (3)"
 }
+
 $svar = 'J'
 
 while($svar -eq 'J')
