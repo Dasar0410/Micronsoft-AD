@@ -25,3 +25,31 @@ New-ADOrganizationalUnit 'Cons' -Description 'Consultants laptops'
     -Path 'OU=Clients,DC=sec,DC=core'
 New-ADOrganizationalUnit 'IT' -Description 'IT computers'
     -Path 'OU=Clients,DC=sec,DC=core'
+
+
+
+#Add the computers to the AD.
+Get-ADComputer "MGR" | 
+  Move-ADObject -TargetPath "OU=Adm,OU=Clients,DC=sec,DC=core"
+
+# Join cl1 and srv1 directly to their correct OU
+#
+# Manual for Add-Computer states it is smart to use -PassThru:
+# "Returns an object representing the item with which you are working. 
+# By default, this cmdlet does not generate any output."
+#
+# CL1
+Add-Computer -Credential $cred -DomainName sec.core `
+  -OUPath 'OU=Cons,OU=Clients,DC=sec,DC=core' -PassThru -Verbose
+# SRV1
+Add-Computer -Credential $cred -DomainName sec.core `
+  -OUPath 'OU=Servers,DC=sec,DC=core' -PassThru -Verbose
+  
+# Let's check status, query via dedicated Cmdlet
+Get-ADComputer -Filter * |
+  Select-Object -Property DNSHostName,DistinguishedName
+
+# Same query via generic LDAP Cmdlet
+Get-ADObject -LDAPfilter "(ObjectClass=Computer)" |
+  Select-Object -Property DNSHostName,DistinguishedName
+# notice missing DNSHostName ! Cmdlet returns a different object  
