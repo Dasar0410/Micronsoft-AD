@@ -10,7 +10,6 @@ function Get-Meny{
 }
 $svar = 'J'
 
-
 while($svar -eq 'J')
 {
 
