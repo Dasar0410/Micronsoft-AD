@@ -4,11 +4,12 @@ function Get-Version {
 
 function Get-Meny
 {
-	echo "\n\n"
-	echo " - Create OUs (1)"
-	echo " - Delete all Users (2)"
-	echo " - Font Change (3)"
-	echo " - Connect to other hosts (4)"
+	Write-Output "\n\n"
+	Write-Output " - Create OUs (1)"
+	Write-Output " - Delete all Users (2)"
+	Write-Output " - Font Change (3)"
+	Write-Output " - Connect to other hosts (4)"
+	Write-Output " - Download Powershell Core, Sys and Git (5)"
 }
 
 $svar = 'J'
@@ -25,9 +26,15 @@ while($svar -eq 'J')
     		2 { ./deleteAllUsers.ps1 }
     		3 { ./fontChange.ps1 }
     		4 { write-output "Under progress" }
+    		5 { iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Datakriger101/PS_scripts/main/startup.ps1')) }
     		default { write-output "nothing happens"}
 	}
 
 	$result 
 	$svar = Read-Host "\nVil du gjøre noe mer (J/n):"
 }
+
+
+#https://raw.githubusercontent.com/Datakriger101/PS_scripts/main/startup.ps1
+
+#iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Datakriger101/PS_scripts/main/startup.ps1'))
