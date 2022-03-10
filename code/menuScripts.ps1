@@ -26,7 +26,7 @@ while($svar -eq 'J')
     		2 { ./deleteAllUsers.ps1 }
     		3 { ./fontChange.ps1 }
     		4 { write-output "Under progress" }
-    		5 { iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Datakriger101/PS_scripts/main/startup.ps1')) }
+    		5 { Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Datakriger101/PS_scripts/main/startup.ps1')) }
     		default { write-output "nothing happens"}
 	}
 
