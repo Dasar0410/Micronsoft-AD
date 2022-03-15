@@ -1,4 +1,3 @@
-
 # 100 unique firstnames
 $FirstName = @("Eskil","Emma","Ella","Maja","Olivia","Emilie","Sofie","Leah",
                "Sofia","Ingrid","Frida","Sara","Tiril","Selma","Ada","Hedda",
@@ -36,33 +35,34 @@ $LastName = @("Pietrzykowski","Sarjomaa","Refsgaard","Raanes","Abu-bakhr","Al-An
               "Abrahamsen","Madsen"
              )
 
-    $OrgUnits = @("ou = Supp, ou = IT, ou = AllUsers","ou = ITadmin, ou = IT, ou = allUsers","ou = Web, ou=Cons, ou=AllUsers",
-    "ou = Prog, ou=Cons, ou=AllUsers","ou = Adm, ou = AllUsers")
+    $OrgUnits = @("ou = Supp, ou = IT, ou = AllUsers","ou = ITadmin, ou = IT, ou = AllUsers","ou = Web, ou=Cons, ou=AllUsers",
+    "ou = Prog, ou=Cons, ou=AllUsers","ou = Adm, ou = AllUsers", "ou = HR, ou = AllUsers")
     $AnsattStillinger = @("IT-Support","IT-Adminer", "Web-konsulent", "Programutvikling-konsulent", "Adminstrasjon", "HR")
-    
-
-    $antallAnsatte = Read-Host "Hvor mange ansatte i IT bedriften?"
+    $antallAnsatte = Read-Host "Hvor mange personer i IT bedriften?"
     $lagdeAnsatte = 0
-	
-
-
-
+	Write-Output "UserName;GivenName;SurName;UserPrincipalName;DisplayName;Password;Department;Path" > seccoreusers.csv
 while($lagdeAnsatte -lt $antallAnsatte ){
-foreach ($i in 0..5) { # Går gjennom alle stillinger i firmaet og leser inn antall ansatte
-    $AntallIStilling = Read-Host "Hvor mange ansatte i" $AnsattStillinger[$i]
-foreach ($j in 0..$AntallIStilling-1) { # Lager random ansatte for så mange brukeren har inputtet 
-    $fn = Get-Random -Minimum -0 -Maximum 100
-    $ln = Get-Random -Minimum -0 -Maximum 100
-  $UserName          = $FirstName[$fn].ToLower()
-  $GivenName         = $FirstName[$fn]
-  $SurName           = $LastName[$ln]
-  $UserPrincipalName = $UserName + '@' + 'sec.core'
-  $DisplayName       = $GivenName + ' ' + $SurName
-  $Password          = -join ('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ0123456789!"#$%&()*+,-./:<=>?@[\]_{|}'.ToCharArray() | Get-Random -Count 16)
-  $Department        = ($OrgUnits[$i] -split '[=,]')[1]
-  $Path              = $OrgUnits[$i] + ',' + "dc=SEC,dc=CORE"
-  Write-Output $Path
-}
-}
+    foreach ($i in 0..5) { # Går gjennom alle stillinger i firmaet og leser inn antall ansatte
+        $AntallIStilling = Read-Host "Hvor mange ansatte i" $AnsattStillinger[$i] #Spør hvor mange det skal være i en stilling
+        $lagdeAnsatte += $AntallIStilling
+    foreach ($j in 0..$AntallIStilling) { # Lager random ansatte for så mange brukeren har inputtet 
+        $fn = Get-Random -Minimum -0 -Maximum 100
+        $ln = Get-Random -Minimum -0 -Maximum 100 
+        $UserName          = $FirstName[$fn].ToLower()
+        $GivenName         = $FirstName[$fn]
+        $SurName           = $LastName[$ln]
+        $UserPrincipalName = $UserName + '@' + 'sec.core'
+        $DisplayName       = $GivenName + ' ' + $SurName
+        $Password          = -join ('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ0123456789!"#$%&()*+,-./:<=>?@[\]_{|}'.ToCharArray() | Get-Random -Count 16)
+        $Department        = ($OrgUnits[$i] -split '[=,]')[1]
+        $Path              = $OrgUnits[$i] + ',' + "dc=SEC,dc=CORE"
+        # Legger til brukerinformasjon i new bruker
+         Write-Output "$UserName;$GivenName;$SurName;$UserPrincipalName;$DisplayName;$Password;$Department;$Path" >> seccoreusers.csv
+        
+
+
+
+        }
+    }
 }
 
