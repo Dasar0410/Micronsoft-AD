@@ -1,50 +1,52 @@
-###Passwords for quick use
-DC1: Sh9im3tawioO29Z1wYKx
-cl1: 3sCfbcftQfNyGJAJTaxP
-mgr: 8lc6nE2dBbpOTbNmKFYz
-srv: 7cuLFehRyr8OPFiRy5Nf 
 
 
-#The different ways to connect
-
-##Connect from DC1
-
-###DC1 -> DC1
-
-Enter-PSSession dc1.sec.core
+### Passwords for quick use (Eskil Refsgaard)
+- DC1: Sh9im3tawioO29Z1wYKx
+- cl1: 3sCfbcftQfNyGJAJTaxP
+- mgr: 8lc6nE2dBbpOTbNmKFYz
+- srv: 7cuLFehRyr8OPFiRy5Nf 
 
 
+#### Run these command sets when after joining MGR and CL1 to the AD. Dette gjør at det er mulig å connecte fra DC1 via PSSession prokollen. 
+>
+>New-ItemProperty -Name LocalAccountTokenFilterPolicy `
+>  -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System `
+>  -PropertyType DWord -Value 1
+>
+>Enable-PsRemoting -Force
+>
+>Set-Item WSMan:\localhost\Client\TrustedHosts -Value "*" >-Force
+>
+## Connect from DC1
+
+### DC1 -> SRV
 
 ### DC1 -> CL1
 
-//Kjøres på CL1 for å godkjennes
-
-New-ItemProperty -Name LocalAccountTokenFilterPolicy `
-  -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System `
-  -PropertyType DWord -Value 1
+'
+Kjøres på CL1 for å godkjennes
 
 
-//Kjøres på DC1, bytte ut med CL1 sin IP
-
-$curValue = (Get-Item wsman:\localhost\Client\TrustedHosts).value
-if ($curValue -eq '') { 
-  Set-Item wsman:\localhost\Client\TrustedHosts -Value "192.168.111.151"#IP_ADDRESS_OF_SRV1
-} else {
-  Set-Item wsman:\localhost\Client\TrustedHosts -Value "$curValue, 192.168.111.151"#IP_ADDRESS_OF_SRV1
-}
-$cred = Get-Credential -Username Admin -Message 'Cred'
-Enter-PSSession -Credential $cred 192.168.111.151#IP_ADDRESS_OF_SRV1 
+>New-ItemProperty -Name LocalAccountTokenFilterPolicy `
+>  -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System `
+>  -PropertyType DWord -Value 1
 
 
+#Kjøres på DC1, bytte ut med CL1 sin IP
 
+>$curValue = (Get-Item wsman:\localhost\Client\TrustedHosts).value
+>if ($curValue -eq '') { 
+>  Set-Item wsman:\localhost\Client\TrustedHosts -Value "192.168.111.151"#IP_ADDRESS_OF_SRV1
+>} else {
+>  Set-Item wsman:\localhost\Client\TrustedHosts -Value "$curValue, 192.168.111.151"#IP_ADDRESS_OF_SRV1
+>}
+>$cred = Get-Credential -Username Admin -Message 'Cred'
+>Enter-PSSession -Credential $cred 192.168.111.151#IP_ADDRESS_OF_SRV1 
 
+```
+Usage: myvms.ps1 [mgr|cl1|dc1|srv1|mgra|cl1a|dc1a|srv1a]
 
-
-
-
-# Usage: myvms.ps1 [mgr|cl1|dc1|srv1|mgra|cl1a|dc1a|srv1a]
-
-# floating ip's and the Admin-user-password for each host (retrieve from SkyHiGh):
+floating ip's and the Admin-user-password for each host (retrieve from SkyHiGh):
 $mgr_ip =""
 $mgr_pw =""
 $cl1_ip =""
@@ -126,4 +128,11 @@ default {
     Write-Output "Please tell me which login you would like."
     }
 }
+
+
+$SERVER = '10.212.143.15'
+$USER   = 'Admin'
+Set-ItemProperty 'HKLM:\SOFTWARE\Microsoft\PowerShell\1\ShellIds' ConsolePrompting $true
+Invoke-Command -Computer $SERVER -Credential (get-credential "$SERVER\$USER") { ls C:\ }
+```
 
