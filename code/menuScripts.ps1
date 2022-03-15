@@ -23,10 +23,11 @@ while($svar -eq 'J')
 	$result = switch ( $kommando )
 	{
     		1 { ./CreateOU.ps1 }
-    		2 { ./deleteAllUsers.ps1 }
-    		3 { ./fontChange.ps1 }
-    		4 { write-output "Under progress" }
-    		5 { Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Datakriger101/PS_scripts/main/startup.ps1')) }
+		2 { ./CreateUsers.ps1 }
+    		3 { ./deleteAllUsers.ps1 }
+    		4 { ./fontChange.ps1 }
+    		5 { write-output "Under progress" }
+    		6 { Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Datakriger101/PS_scripts/main/startup.ps1')) }
     		default { write-output "nothing happens"}
 	}
 
