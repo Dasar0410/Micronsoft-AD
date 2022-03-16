@@ -1,4 +1,4 @@
-.\CreateUsersCSV.ps1
+.\CreateUserCSV.ps1
 $ADUsers = Import-Csv seccoreusers.csv -Delimiter ";"
 foreach ($User in $ADUsers) {
   New-ADUser `
