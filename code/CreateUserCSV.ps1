@@ -19,19 +19,19 @@ $FirstName = @("Eskil","Emma","Ella","Maja","Olivia","Emilie","Sofie","Leah",
 $LastName = @("Pietrzykowski","Sarjomaa","Refsgaard","Raanes","Abu-bakhr","Al-Ani",
               "Nilsen","Kristiansen","Jensen","Karlsen","Johnsen","Pettersen",
               "Eriksen","Berg","Haugen","Hagen","Johannessen","Andreassen",
-              "Jacobsen","Dahl","Jørgensen","Henriksen","Lund","Halvorsen",
-              "Sørensen","Jakobsen","Moen","Gundersen","Iversen","Strand",
+              "Jacobsen","Dahl","Jorgensen","Henriksen","Lund","Halvorsen",
+              "Sorensen","Jakobsen","Moen","Gundersen","Iversen","Strand",
               "Solberg","Svendsen","Eide","Knutsen","Martinsen","Paulsen",
               "Bakken","Kristoffersen","Mathisen","Lie","Amundsen","Nguyen",
-              "Rasmussen","Ali","Lunde","Solheim","Berge","Moe","Nygård",
+              "Rasmussen","Ali","Lunde","Solheim","Berge","Moe","Nygaard",
               "Bakke","Kristensen","Fredriksen","Holm","Lien","Hauge",
-              "Christensen","Andresen","Nielsen","Knudsen","Evensen","Sæther",
+              "Christensen","Andresen","Nielsen","Knudsen","Evensen","Saather",
               "Aas","Myhre","Hanssen","Ahmed","Haugland","Thomassen",
               "Sivertsen","Simonsen","Danielsen","Berntsen","Sandvik",
-              "Rønning","Arnesen","Antonsen","Næss","Vik","Haug","Ellingsen",
+              "Ronning","Arnesen","Antonsen","Nass","Vik","Haug","Ellingsen",
               "Thorsen","Edvardsen","Birkeland","Isaksen","Gulbrandsen","Ruud",
-              "Aasen","Strøm","Myklebust","Tangen","Ødegård","Eliassen",
-              "Helland","Bøe","Jenssen","Aune","Mikkelsen","Tveit","Brekke",
+              "Aasen","Strom","Myklebust","Tangen","Odegaard","Eliassen",
+              "Helland","Boe","Jenssen","Aune","Mikkelsen","Tveit","Brekke",
               "Abrahamsen","Madsen"
              )
 
@@ -40,28 +40,37 @@ $LastName = @("Pietrzykowski","Sarjomaa","Refsgaard","Raanes","Abu-bakhr","Al-An
     $AnsattStillinger = @("IT-Support","IT-Adminer", "Web-konsulent", "Programutvikling-konsulent", "Adminstrasjon", "HR")
     $antallAnsatte = Read-Host "Hvor mange personer i IT bedriften?"
     $lagdeAnsatte = 0
+    $ansatteIgjen = 0
 	Write-Output "UserName;GivenName;SurName;UserPrincipalName;DisplayName;Password;Department;Path" > seccoreusers.csv
 while($lagdeAnsatte -lt $antallAnsatte ){
-    foreach ($i in 0..5) { # Går gjennom alle stillinger i firmaet og leser inn antall ansatte
-        $AntallIStilling = Read-Host "Hvor mange ansatte i" $AnsattStillinger[$i] #Spør hvor mange det skal være i en stilling
-        $lagdeAnsatte += $AntallIStilling
-    foreach ($j in 0..$AntallIStilling) { # Lager random ansatte for så mange brukeren har inputtet 
-        $fn = Get-Random -Minimum -0 -Maximum 100
-        $ln = Get-Random -Minimum -0 -Maximum 100 
-        $UserName          = $FirstName[$fn].ToLower()
-        $GivenName         = $FirstName[$fn]
-        $SurName           = $LastName[$ln]
-        $UserPrincipalName = $UserName + '@' + 'sec.core'
-        $DisplayName       = $GivenName + ' ' + $SurName
-        $Password          = -join ('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ0123456789!"#$%&()*+,-./:<=>?@[\]_{|}'.ToCharArray() | Get-Random -Count 16)
-        $Department        = ($OrgUnits[$i] -split '[=,]')[1]
-        $Path              = $OrgUnits[$i] + ',' + "dc=SEC,dc=CORE"
-        # Legger til brukerinformasjon i new bruker
-         Write-Output "$UserName;$GivenName;$SurName;$UserPrincipalName;$DisplayName;$Password;$Department;$Path" >> seccoreusers.csv
-        
+    foreach ($i in 0..5) { # Gar gjennom alle stillinger i firmaet og leser inn antall ansatte
+        if ($lagdeAnsatte -lt $antallAnsatte ){
+            do {
+            $AntallIStilling = Read-Host "Hvor mange ansatte i" $AnsattStillinger[$i] #Spor hvor mange det skal vare i en stilling
+            $ansatteIgjen = $antallAnsatte - $AntallIStilling
+            } while ($AntallIStilling -le  $ansatteIgjen)
+            $lagdeAnsatte += $AntallIStilling
+            $ansatteIgjen = $antallAnsatte - $lagdeAnsatte
+            $string = "Du har "
+            $string += write-Output $ansatteIgjen
+            $string += " ansatte igjen a tildele plass!"
+            write-Output $string
 
+            foreach ($j in 0..$AntallIStilling) { # Lager random ansatte for sa mange brukeren har inputtet
+                $fn = Get-Random -Minimum -0 -Maximum 100
+                $ln = Get-Random -Minimum -0 -Maximum 100
+                $UserName          = $FirstName[$fn].ToLower()
+                $GivenName         = $FirstName[$fn]
+                $SurName           = $LastName[$ln]
+                $UserPrincipalName = $UserName + '@' + 'sec.core'
+                $DisplayName       = $GivenName + ' ' + $SurName
+                $Password          = -join ('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ0123456789!"#$%&()*+,-./:<=>?@[\]_{|}'.ToCharArray() | Get-Random -Count 16)
+                $Department        = ($OrgUnits[$i] -split '[=,]')[1]
+                $Path              = $OrgUnits[$i] + ',' + "dc=SEC,dc=CORE"
+                # Legger til brukerinformasjon i new bruker
 
-
+                Write-Output "$UserName;$GivenName;$SurName;$UserPrincipalName;$DisplayName;$Password;$Department;$Path" >> seccoreusers.csv
+            }
         }
     }
 }
