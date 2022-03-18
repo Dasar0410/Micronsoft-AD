@@ -4,7 +4,7 @@ curl -O 'https://download.microsoft.com/download/8/5/C/85C25433-A1B0-4FFA-9429-7
 
 7z x '.\Windows%20Server%202022%20Security%20Baseline.zip'
 Set-Location '.\Windows Server-2022-Security-Baseline-FINAL\Scripts'
-Get-GPO -All | Format-Table -Property displayname 
+Get-GPO -All | Format-Table -Property displayname
 .\Baseline-ADImport.ps1
 Get-GPO -All | Format-Table -Property displayname
 
