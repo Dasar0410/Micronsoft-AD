@@ -41,7 +41,7 @@ $LastName = @("Pietrzykowski","Sarjomaa","Refsgaard","Raanes","Abu-bakhr","Al-An
     $antallAnsatte = Read-Host "Hvor mange personer i IT bedriften?"
     $lagdeAnsatte = 0
     $ansatteIgjen = 0
-	Write-Output "UserName;GivenName;SurName;UserPrincipalName;DisplayName;Password;Department;Path" > seccoreusers.csv
+	Write-Output "UserName;GivenName;SurName;UserPrincipalName;DisplayName;Password;Department;Path" > micronsoftusers.csv
 while($lagdeAnsatte -lt $antallAnsatte ){
     foreach ($i in 0..5) { # Gar gjennom alle stillinger i firmaet og leser inn antall ansatte
         if ($lagdeAnsatte -lt $antallAnsatte ){
@@ -62,14 +62,14 @@ while($lagdeAnsatte -lt $antallAnsatte ){
                 $UserName          = $FirstName[$fn].ToLower()
                 $GivenName         = $FirstName[$fn]
                 $SurName           = $LastName[$ln]
-                $UserPrincipalName = $UserName + '@' + 'sec.core'
+                $UserPrincipalName = $UserName + '@' + 'micron.soft'
                 $DisplayName       = $GivenName + ' ' + $SurName
                 $Password          = -join ('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ0123456789!"#$%&()*+,-./:<=>?@[\]_{|}'.ToCharArray() | Get-Random -Count 16)
                 $Department        = ($OrgUnits[$i] -split '[=,]')[1]
-                $Path              = $OrgUnits[$i] + ',' + "dc=SEC,dc=CORE"
+                $Path              = $OrgUnits[$i] + ',' + "dc=micron,dc=soft"
                 # Legger til brukerinformasjon i new bruker
 
-                Write-Output "$UserName;$GivenName;$SurName;$UserPrincipalName;$DisplayName;$Password;$Department;$Path" >> seccoreusers.csv
+                Write-Output "$UserName;$GivenName;$SurName;$UserPrincipalName;$DisplayName;$Password;$Department;$Path" >> micronsoftusers.csv
             }
         }
     }

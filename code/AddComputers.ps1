@@ -2,9 +2,9 @@
 # CL1 and SRV1 must currently be added to the AD from respective computers.
 
 # MGR
-Get-ADComputer "MGR" | Move-ADObject -TargetPath "OU=Adm,OU=Clients,DC=sec,DC=core"
+Get-ADComputer "MGR" | Move-ADObject -TargetPath "OU=Adm,OU=Clients,DC=micron,DC=soft"
 
 # CL1
-Add-Computer -Credential $cred -DomainName sec.core -OUPath 'OU=Cons,OU=Clients,DC=sec,DC=core' -PassThru -Verbose
+Add-Computer -Credential $cred -DomainName micron.soft -OUPath "OU=Cons,OU=Clients,DC=micron,DC=soft" -PassThru -Verbose
 # SRV1
-Add-Computer -Credential $cred -DomainName sec.core -OUPath 'OU=Servers,DC=sec,DC=core' -PassThru -Verbose
+Add-Computer -Credential $cred -DomainName micron.soft -OUPath 'OU=Servers,DC=micron,DC=soft' -PassThru -Verbose
