@@ -27,14 +27,9 @@ while($svar -eq 'J')
     		3 { ./deleteAllUsers.ps1 }
     		4 { ./ConnectPSSession.ps1 }
     		5 { ./ImportSecurityBaseline.ps1 }
-    		6 { Get-StartInstaller }
     		default { write-output "nothing happens"}
 	}
 
 	$result
 	$svar = Read-Host "\nVil du gjøre noe mer (J/n):"
-}
-
-function Get-StartInstaller{
-	iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Datakriger101/PS_scripts/main/startup.ps1'))
 }
