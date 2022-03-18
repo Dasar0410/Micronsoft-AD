@@ -1,4 +1,3 @@
-# Deletes all users from AD structure.
-get-ADOrganizationalUnit -Identity "OU=AllUsers,DC=sec,DC=core" |
-  set-ADOrganizationalUnit -ProtectedFromAccidentalDeletion $false
-  Remove-ADOrganizationalUnit -Identity "OU=AllUsers,DC=sec,DC=core" -Recursive
+#Script that ONLY removes all the user
+
+Get-ADUser -SearchBase "OU=AllUsers,DC=sec,DC=core" -Filter * | Remove-ADUser -Confirm:$false -Verbose

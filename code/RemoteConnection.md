@@ -24,7 +24,9 @@
 ### DC1 -> CL1
 
 '
-Kjøres på CL1 for å godkjennes
+//Sette opp AD
+
+
 
 
 >New-ItemProperty -Name LocalAccountTokenFilterPolicy `
@@ -32,7 +34,7 @@ Kjøres på CL1 for å godkjennes
 >  -PropertyType DWord -Value 1
 
 
-#Kjøres på DC1, bytte ut med CL1 sin IP
+#Kjøres på DC1, bytte ut med CL1 sin IP - Vet ikke hva det er
 
 >$curValue = (Get-Item wsman:\localhost\Client\TrustedHosts).value
 >if ($curValue -eq '') { 
@@ -43,20 +45,21 @@ Kjøres på CL1 for å godkjennes
 >$cred = Get-Credential -Username Admin -Message 'Cred'
 >Enter-PSSession -Credential $cred 192.168.111.151#IP_ADDRESS_OF_SRV1 
 
-```
-Usage: myvms.ps1 [mgr|cl1|dc1|srv1|mgra|cl1a|dc1a|srv1a]
+//Login - Eskil_tmp
 
-floating ip's and the Admin-user-password for each host (retrieve from SkyHiGh):
+# Usage: myvms.ps1 [mgr|cl1|dc1|srv1|mgra|cl1a|dc1a|srv1a]
+
+# floating ip's and the Admin-user-password for each host (retrieve from SkyHiGh):
 $mgr_ip =""
 $mgr_pw =""
 $cl1_ip =""
 $cl1_pw =""
-$dc1_ip ="10.212.136.67"
-$dc1_pw ="Sh9im3tawioO29Z1wYKx"
+$dc1_ip =""
+$dc1_pw =""
 $srv1_ip=""
 $srv1_pw=""
 # domain administrator password (you set this yourself when creating the domain):
-$dc1a_pw=Xx120build
+$dc1a_pw=
 
 $logintype=$args[0]
 
@@ -129,10 +132,27 @@ default {
     }
 }
 
+//Lage Forest
 
-$SERVER = '10.212.143.15'
-$USER   = 'Admin'
-Set-ItemProperty 'HKLM:\SOFTWARE\Microsoft\PowerShell\1\ShellIds' ConsolePrompting $true
-Invoke-Command -Computer $SERVER -Credential (get-credential "$SERVER\$USER") { ls C:\ }
-```
-
+# run as administrator
+Install-WindowsFeature AD-Domain-Services, DNS -IncludeManagementTools
+$Password = Read-Host -Prompt 'Enter Password' -AsSecureString
+Set-LocalUser -Password $Password Administrator
+$Params = @{
+    DomainMode                    = 'WinThreshold'
+    DomainName                    = 'sec.core'
+    DomainNetbiosName             = 'SEC'
+    ForestMode                    = 'WinThreshold'
+    InstallDns                    = $true
+    NoRebootOnCompletion          = $true
+    SafeModeAdministratorPassword = $Password
+    Force                         = $true
+}
+Install-ADDSForest @Params
+Restart-Computer
+# Log in as SEC\Administrator with password from above, test our domain
+Get-ADRootDSE
+Get-ADForest
+Get-ADDomain
+# Any computers joined the domain?
+Get-ADComputer -Filter *
