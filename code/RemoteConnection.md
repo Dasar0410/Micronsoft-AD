@@ -22,12 +22,11 @@
 
   `Deretter på cl1`
 
-
 >$curValue = (Get-Item wsman:\localhost\Client\TrustedHosts).value  
 >if ($curValue -eq '') {   
->Set-Item wsman:\localhost\Client\TrustedHosts -Value "192.168.111.151"#IP_ADDRESS_OF_SRV1  
+>Set-Item wsman:\localhost\Client\TrustedHosts -Value ""#IP_ADDRESS_OF_SRV1  
 >} else {  
->  Set-Item wsman:\localhost\Client\TrustedHosts -Value   "$curValue, 192.168.111.151"#IP_ADDRESS_OF_SRV1
+>  Set-Item wsman:\localhost\Client\TrustedHosts -Value   "$curValue "#IP_ADDRESS_OF_SRV1
 >}  
 >$cred = Get-Credential -Username Admin -Message 'Cred'  
 >Enter-PSSession -Credential $cred #IP_ADDRESS_OF_SRV1   
