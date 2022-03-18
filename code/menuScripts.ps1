@@ -1,4 +1,4 @@
-#Main menu, where all the scripts are run from
+﻿#Main menu, where all the scripts are run from
 #Different ps1 script found in /code/. folder
 
 function Get-Meny
