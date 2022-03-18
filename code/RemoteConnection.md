@@ -1,158 +1,64 @@
-
-
-### Passwords for quick use (Eskil Refsgaard)
-- DC1: Sh9im3tawioO29Z1wYKx
-- cl1: 3sCfbcftQfNyGJAJTaxP
-- mgr: 8lc6nE2dBbpOTbNmKFYz
-- srv: 7cuLFehRyr8OPFiRy5Nf 
-
-
-#### Run these command sets when after joining MGR and CL1 to the AD. Dette gjør at det er mulig å connecte fra DC1 via PSSession prokollen. 
+#### `Run these command sets when after joining MGR and CL1 to the AD. Dette gjør at det er mulig å connecte fra DC1 via PSSession prokollen. `
 >
->New-ItemProperty -Name LocalAccountTokenFilterPolicy `
+>   New-ItemProperty -Name LocalAccountTokenFilterPolicy `
 >  -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System `
 >  -PropertyType DWord -Value 1
->
+
 >Enable-PsRemoting -Force
->
+
 >Set-Item WSMan:\localhost\Client\TrustedHosts -Value "*" >-Force
->
 ## Connect from DC1
 
 ### DC1 -> SRV
 
 ### DC1 -> CL1
 
-'
-//Sette opp AD
+
+#### `Connecte hosts utenfra domenet - først på srv`
+
+>New-ItemProperty -Name LocalAccountTokenFilterPolicy `  
+>  -Path   HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System `
+  -PropertyType DWord -Value 1  
+
+  `Deretter på cl1`
 
 
+>$curValue = (Get-Item wsman:\localhost\Client\TrustedHosts).value  
+>if ($curValue -eq '') {   
+>Set-Item wsman:\localhost\Client\TrustedHosts -Value "192.168.111.151"#IP_ADDRESS_OF_SRV1  
+>} else {  
+>  Set-Item wsman:\localhost\Client\TrustedHosts -Value   "$curValue, 192.168.111.151"#IP_ADDRESS_OF_SRV1
+>}  
+>$cred = Get-Credential -Username Admin -Message 'Cred'  
+>Enter-PSSession -Credential $cred #IP_ADDRESS_OF_SRV1   
 
+#### `run as administrator`
+>Install-WindowsFeature AD-Domain-Services, DNS -IncludeManagementTools  
+>$Password = Read-Host -Prompt 'Enter Password' -AsSecureString  
+>Set-LocalUser -Password $Password Administrator  
+>$Params = @{  
+>    DomainMode                    = 'WinThreshold'  
+>    DomainName                    = 'sec.core'  
+>    DomainNetbiosName             = 'SEC'  
+>    ForestMode                    = 'WinThreshold'  
+>    InstallDns                    = $true  
+>    NoRebootOnCompletion          = $true  
+>    SafeModeAdministratorPassword = $Password  
+>    Force                         = $true  
+>}  
+>Install-ADDSForest @Params  
 
->New-ItemProperty -Name LocalAccountTokenFilterPolicy `
->  -Path HKLM:\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System `
->  -PropertyType DWord -Value 1
+>Restart-Computer  
 
+#### `Teste om domenet er satt opp`
+>Get-ADRootDSE  
+>Get-ADForest  
+>Get-ADDomain  
+  
+>Get-ADComputer -Filter *  
 
-#Kjøres på DC1, bytte ut med CL1 sin IP - Vet ikke hva det er
-
->$curValue = (Get-Item wsman:\localhost\Client\TrustedHosts).value
->if ($curValue -eq '') { 
->  Set-Item wsman:\localhost\Client\TrustedHosts -Value "192.168.111.151"#IP_ADDRESS_OF_SRV1
->} else {
->  Set-Item wsman:\localhost\Client\TrustedHosts -Value "$curValue, 192.168.111.151"#IP_ADDRESS_OF_SRV1
->}
->$cred = Get-Credential -Username Admin -Message 'Cred'
->Enter-PSSession -Credential $cred 192.168.111.151#IP_ADDRESS_OF_SRV1 
-
-//Login - Eskil_tmp
-
-# Usage: myvms.ps1 [mgr|cl1|dc1|srv1|mgra|cl1a|dc1a|srv1a]
-
-# floating ip's and the Admin-user-password for each host (retrieve from SkyHiGh):
-$mgr_ip =""
-$mgr_pw =""
-$cl1_ip =""
-$cl1_pw =""
-$dc1_ip =""
-$dc1_pw =""
-$srv1_ip=""
-$srv1_pw=""
-# domain administrator password (you set this yourself when creating the domain):
-$dc1a_pw=
-
-$logintype=$args[0]
-
-function Connect-MyHost {
-    param (
-        $User,$IP,$Pw
-    )
-    if (Test-NetConnection -ComputerName "$ip" -Port 3389 -InformationLevel Quiet -WarningAction SilentlyContinue) {
-        Write-Output "Logging in $user on $ip"
-        cmdkey `/generic:"$ip" `/user:"$user" `/pass:"$pw"
-        mstsc `/v:"$ip"
-        Start-Sleep 10
-        cmdkey `/delete:"$ip"
-    } else {
-        Write-Output "Not able to reach port 3389 on host $ip"
-    }
-}
-
-switch ($logintype) {
-"mgr" {
-    $ip="$mgr_ip"
-    $pw="$mgr_pw"
-    $user="Admin"
-    Connect-MyHost -User $user -IP $ip -Pw $pw
-    }
-"cl1" {
-    $ip="$cl1_ip"
-    $pw="$cl1_pw"
-    $user="Admin"
-    Connect-MyHost -User $user -IP $ip -Pw $pw
-    }
-"dc1" {
-    $ip="$dc1_ip"
-    $pw="$dc1_pw"
-    $user="Admin"
-    Connect-MyHost -User $user -IP $ip -Pw $pw
-    }
-"srv1" {
-    $ip="$srv1_ip"
-    $pw="$srv1_pw"
-    $user="Admin"
-    Connect-MyHost -User $user -IP $ip -Pw $pw
-    }
-"mgra" {
-    $ip=$mgr_ip
-    $pw="$dc1a_pw"
-    $user='SEC\Administrator'
-    Connect-MyHost -User $user -IP $ip -Pw $pw
-    }
-"cl1a" {
-    $ip=$cl1_ip
-    $pw="$dc1a_pw"
-    $user='SEC\Administrator'
-    Connect-MyHost -User $user -IP $ip -Pw $pw
-    }
-"dc1a" {
-    $ip=$dc1_ip
-    $pw="$dc1a_pw"
-    $user='SEC\Administrator'
-    Connect-MyHost -User $user -IP $ip -Pw $pw
-    }
-"srv1a" {
-    $ip=$srv1_ip
-    $pw="$dc1a_pw"
-    $user='SEC\Administrator'
-    Connect-MyHost -User $user -IP $ip -Pw $pw
-    }
-default {
-    Write-Output "Please tell me which login you would like."
-    }
-}
-
-//Lage Forest
-
-# run as administrator
-Install-WindowsFeature AD-Domain-Services, DNS -IncludeManagementTools
-$Password = Read-Host -Prompt 'Enter Password' -AsSecureString
-Set-LocalUser -Password $Password Administrator
-$Params = @{
-    DomainMode                    = 'WinThreshold'
-    DomainName                    = 'sec.core'
-    DomainNetbiosName             = 'SEC'
-    ForestMode                    = 'WinThreshold'
-    InstallDns                    = $true
-    NoRebootOnCompletion          = $true
-    SafeModeAdministratorPassword = $Password
-    Force                         = $true
-}
-Install-ADDSForest @Params
-Restart-Computer
-# Log in as SEC\Administrator with password from above, test our domain
-Get-ADRootDSE
-Get-ADForest
-Get-ADDomain
-# Any computers joined the domain?
-Get-ADComputer -Filter *
+## run as administrator, på mgr og cl1 for å joine domenet
+>Get-NetAdapter | Set-DnsClientServerAddress -ServerAddresses IP_ADDRESS_OF_DC1  
+>$cred = Get-Credential -UserName 'SEC\Administrator' -Message 'Cred'  
+>Add-Computer -Credential $cred -DomainName sec.core -PassThru -Verbose  
+>Restart-Computer  
