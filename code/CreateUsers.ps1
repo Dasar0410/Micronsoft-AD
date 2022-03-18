@@ -1,5 +1,5 @@
 .\CreateUserCSV.ps1
-$ADUsers = Import-Csv seccoreusers.csv -Delimiter ";"
+$ADUsers = Import-Csv micronsoftusers.csv -Delimiter ";"
 foreach ($User in $ADUsers) {
   New-ADUser `
     -SamAccountName        $User.Username `
