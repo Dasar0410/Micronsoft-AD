@@ -38,8 +38,8 @@
 >Set-LocalUser -Password $Password Administrator  
 >$Params = @{  
 >    DomainMode                    = 'WinThreshold'  
->    DomainName                    = 'sec.core'  
->    DomainNetbiosName             = 'SEC'  
+>    DomainName                    = 'micron.soft'  
+>    DomainNetbiosName             = 'MICRON'  
 >    ForestMode                    = 'WinThreshold'  
 >    InstallDns                    = $true  
 >    NoRebootOnCompletion          = $true  
@@ -59,6 +59,6 @@
 
 ## run as administrator, på mgr og cl1 for å joine domenet
 >Get-NetAdapter | Set-DnsClientServerAddress -ServerAddresses IP_ADDRESS_OF_DC1  
->$cred = Get-Credential -UserName 'SEC\Administrator' -Message 'Cred'  
->Add-Computer -Credential $cred -DomainName sec.core -PassThru -Verbose  
+>$cred = Get-Credential -UserName 'MICRON\Administrator' -Message 'Cred'  
+>Add-Computer -Credential $cred -DomainName micron.soft -PassThru -Verbose  
 >Restart-Computer  
