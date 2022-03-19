@@ -1,4 +1,4 @@
-# 100 unique firstnames
+# 100 unike fornavn
 $FirstName = @("Eskil","Emma","Ella","Maja","Olivia","Emilie","Sofie","Leah",
                "Sofia","Ingrid","Frida","Sara","Tiril","Selma","Ada","Hedda",
                "Dani","Anna","Alma","Eva","Mia","Thea","Live","Ida","Astrid",
@@ -15,7 +15,7 @@ $FirstName = @("Eskil","Emma","Ella","Maja","Olivia","Emilie","Sofie","Leah",
                "Gustav","Felix","Sverre","Adrian","Lars"
               )
 
-# 100 unique lastnames
+# 100 unike etternavn
 $LastName = @("Pietrzykowski","Sarjomaa","Refsgaard","Raanes","Abu-bakhr","Al-Ani",
               "Nilsen","Kristiansen","Jensen","Karlsen","Johnsen","Pettersen",
               "Eriksen","Berg","Haugen","Hagen","Johannessen","Andreassen",
@@ -34,40 +34,35 @@ $LastName = @("Pietrzykowski","Sarjomaa","Refsgaard","Raanes","Abu-bakhr","Al-An
               "Helland","Boe","Jenssen","Aune","Mikkelsen","Tveit","Brekke",
               "Abrahamsen","Madsen"
              )
-
+    # Alle OU-ene lagret i array format for å lett plukke ut riktig OU å sette brukere i.
     $OrgUnits = @("ou = Supp, ou = IT, ou = AllUsers","ou = ITadmin, ou = IT, ou = AllUsers","ou = Web, ou=Cons, ou=AllUsers",
     "ou = Prog, ou=Cons, ou=AllUsers","ou = Adm, ou = AllUsers", "ou = HR, ou = AllUsers")
+    # OU-navn i array som outputtes til brukeren 
     $AnsattStillinger = @("IT-Support","IT-Adminer", "Web-konsulent", "Programutvikling-konsulent", "Adminstrasjon", "HR")
-    $antallAnsatte = Read-Host "Hvor mange personer i IT bedriften?"
-    $lagdeAnsatte = 0
-    $uniktTall = 0
+    $lagdeBrukere = 0 # Brukes for å outputta brukere som forløpig er lagd etter hver OU
+    $uniktTall = 0 # Unikt tall som brukes for å sikre at alle brukere har unike brukernavn og UPN
+    #Skriver først formatet til csv filen
 	Write-Output "UserName;GivenName;SurName;UserPrincipalName;DisplayName;Password;Department;Path" > micronsoftusers.csv
-    foreach ($i in 0..5) { # Gar gjennom alle stillinger i firmaet og leser inn antall ansatte
-        
-        if ($lagdeAnsatte -lt $antallAnsatte ){
-            $AntallIStilling = Read-Host "Hvor mange personer i" $AnsattStillinger[$i] #Spor hvor mange det skal vare i en stilling
-            $lagdeAnsatte += $AntallIStilling
+    foreach ($i in 0..5) { # Gar gjennom alle OU-er i firmaet
+            $AntallIStilling = Read-Host "Hvor mange personer i" $AnsattStillinger[$i] #Spør hvor mange brukere som skal lages i nåværende OU
+            $lagdeBrukere += $AntallIStilling
             $string = "Du har forelopig tildelt "
-            $string += write-Output $lagdeAnsatte
+            $string += write-Output $lagdeBrukere
             $string += " personer en OU"
             write-Output $string
-            foreach ($j in 1..$AntallIStilling) { # Lager random ansatte for sa mange brukeren har inputtet
-                $uniktTall++
-                $fn = Get-Random -Minimum -0 -Maximum 100
-                $ln = Get-Random -Minimum -0 -Maximum 100
+            foreach ($j in 1..$AntallIStilling) { # Lager x antall randomiza brukere ettersom hva programkjører valgte
+                $uniktTall++ #plusser på unike tallet for hver bruker som blir lagd
+                $fn = Get-Random -Minimum -0 -Maximum 100 #firstname
+                $ln = Get-Random -Minimum -0 -Maximum 100 #lastname
                 $UserName          = $FirstName[$fn].ToLower() + $uniktTall
                 $GivenName         = $FirstName[$fn]
                 $SurName           = $LastName[$ln]
-                $UserPrincipalName = $UserName + $Surname + $uniktTall + '@' + 'micron.soft'
+                $UserPrincipalName = $UserName + $Surname + $uniktTall + '@' + 'micron.soft' 
                 $DisplayName       = $GivenName + ' ' + $SurName
-                $Password          = -join ('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ0123456789!"#$%&()*+,-./:<=>?@[\]_{|}'.ToCharArray() | Get-Random -Count 20)
-                $Department        = ($OrgUnits[$i] -split '[=,]')[1]
-                $Path              = $OrgUnits[$i] + ',' + "dc=micron,dc=soft"
-                # Legger til brukerinformasjon i new bruker
-
+                $Password          = (-join ('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ0123456789!"#$%&()*+,-./:<=>?@[\]_{|}'.ToCharArray() | Get-Random -Count 30)) + 'A$' + $uniktTall
+                $Department        = ($OrgUnits[$i] -split '[=,]')[1] 
+                $Path              = $OrgUnits[$i] + ',' + "dc=micron,dc=soft" #Legger bruker til i valgt OU ved hjelp av i variabelen i loop ovenfor
+                #Skriver ut brukeren med all dems data til micronsoftusers.csv
                 Write-Output "$UserName;$GivenName;$SurName;$UserPrincipalName;$DisplayName;$Password;$Department;$Path" >> micronsoftusers.csv
             }
-        }
-    } # Problem:: Det blir lagt en ekstra bruker inn i hver OU. dett skal ikke skje. fisk daniel
-
-
+    }
