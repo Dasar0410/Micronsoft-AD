@@ -2,7 +2,7 @@
 # Import all GPOs in this baseline into Active Directory Group Policy
 #
 
-$GpoMap = .\MapGuidsToGpoNames.ps1 ..\GPOs
+$GpoMap = .\MapGuidsToGpoNames.ps1 ..\GPOs\GPOer
 
 Write-Host "Importing the following GPOs:" -ForegroundColor Cyan
 Write-Host
