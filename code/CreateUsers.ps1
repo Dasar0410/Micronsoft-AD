@@ -1,4 +1,5 @@
-.\CreateUserCSV.ps1
+.\CreateUserCSV.ps1 #Lager brukere og setter dem i CSV fil
+Write-Output "Importerer CSV-fil og legger brukerne inn i AD..."
 $ADUsers = Import-Csv micronsoftusers.csv -Delimiter ";"
 foreach ($User in $ADUsers) {
   New-ADUser `
@@ -14,4 +15,4 @@ foreach ($User in $ADUsers) {
     -Path                  $user.path `
     -AccountPassword (ConvertTo-SecureString $user.Password -AsPlainText -Force)
 }
-Write-Output "Alle brukerene ble lagt til"
+Write-Output "Brukerne er lagt til AD!"
