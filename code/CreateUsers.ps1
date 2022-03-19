@@ -1,5 +1,5 @@
 .\CreateUserCSV.ps1
-$ADUsers = Import-Csv seccoreusers.csv -Delimiter ";"
+$ADUsers = Import-Csv micronsoftusers.csv -Delimiter ";"
 foreach ($User in $ADUsers) {
   New-ADUser `
     -SamAccountName        $User.Username `
@@ -14,3 +14,4 @@ foreach ($User in $ADUsers) {
     -Path                  $user.path `
     -AccountPassword (ConvertTo-SecureString $user.Password -AsPlainText -Force)
 }
+Write-Output "Alle brukerene ble lagt til"
