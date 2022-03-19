@@ -18,15 +18,17 @@ while($svar -eq 'J')
 {
 
 	Get-Meny;
-	$kommando = Read-Host "Hvilket nummer vil du gjøre:"
-
+	do{
+	$kommando = Read-Host "Hvilken opsjon velger du (1-6):"
+	} while($kommando -lt 0 || $kommando -gt 6)
 	$result = switch ( $kommando )
 	{
     		1 { ./CreateOU.ps1 }
 			2 { ./CreateUsers.ps1 }
-    		3 { ./deleteAllUsers.ps1 }
-    		4 { ./ConnectPSSession.ps1 }
-    		5 { ./ImportGPOs.ps1 }
+			3 { ./CreateSingleUser.ps1 }
+    		4 { ./deleteAllUsers.ps1 }
+    		5 { ./ConnectPSSession.ps1 }
+    		6 { ./ImportGPOs.ps1 }
     		default { write-output "nothing happens"}
 	}
 
