@@ -26,7 +26,7 @@ while($svar -eq 'J')
 			2 { ./CreateUsers.ps1 }
     		3 { ./deleteAllUsers.ps1 }
     		4 { ./ConnectPSSession.ps1 }
-    		5 { ./ImportSecurityBaseline.ps1 }
+    		5 { ./ImportGPOs.ps1 }
     		default { write-output "nothing happens"}
 	}
 

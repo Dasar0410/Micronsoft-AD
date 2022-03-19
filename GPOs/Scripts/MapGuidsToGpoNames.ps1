@@ -40,7 +40,7 @@ Name                                                                       Value
 param(
     [parameter(Mandatory=$true)]
     [String]
-    $rootdir,
+    $rootdir = 'C:\Users\Administrator\HaraldMR-DCSG1005downloadfork*\GPOs\GPOer',
 
     [switch]
     $formatOutput
