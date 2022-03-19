@@ -1,5 +1,5 @@
 # 100 unike fornavn
-$FirstName = @("Eskil","Emma","Ella","Maja","Olivia","Emilie","Sofie","Leah",
+$FirstName = @("Josefine","Emma","Ella","Maja","Olivia","Emilie","Sofie","Leah",
                "Sofia","Ingrid","Frida","Sara","Tiril","Selma","Ada","Hedda",
                "Dani","Anna","Alma","Eva","Mia","Thea","Live","Ida","Astrid",
                "Ellinor","Vilde","Linnea","Iben","Aurora","Mathilde","Jenny",
@@ -49,7 +49,7 @@ $LastName = @("Pietrzykowski","Sarjomaa","Refsgaard","Raanes","Abu-bakhr","Al-An
             $string = "Du har forelopig tildelt "
             $string += write-Output $lagdeBrukere
             $string += " personer en OU"
-            write-Output $string
+            Write-Output $string
             foreach ($j in 1..$AntallIStilling) { # Lager x antall randomiza brukere ettersom hva programkjører valgte
                 $uniktTall++ #plusser på unike tallet for hver bruker som blir lagd
                 $fn = Get-Random -Minimum -0 -Maximum 100 #firstname
