@@ -40,31 +40,27 @@ $LastName = @("Pietrzykowski","Sarjomaa","Refsgaard","Raanes","Abu-bakhr","Al-An
     $AnsattStillinger = @("IT-Support","IT-Adminer", "Web-konsulent", "Programutvikling-konsulent", "Adminstrasjon", "HR")
     $antallAnsatte = Read-Host "Hvor mange personer i IT bedriften?"
     $lagdeAnsatte = 0
-    $ansatteIgjen = 0
+    $uniktTall = 0
 	Write-Output "UserName;GivenName;SurName;UserPrincipalName;DisplayName;Password;Department;Path" > micronsoftusers.csv
-while($lagdeAnsatte -lt $antallAnsatte ){
     foreach ($i in 0..5) { # Gar gjennom alle stillinger i firmaet og leser inn antall ansatte
+        
         if ($lagdeAnsatte -lt $antallAnsatte ){
-            do {
-            $AntallIStilling = Read-Host "Hvor mange ansatte i" $AnsattStillinger[$i] #Spor hvor mange det skal vare i en stilling
-            $ansatteIgjen = $antallAnsatte - $AntallIStilling
-            } while ($AntallIStilling -le  $ansatteIgjen)
+            $AntallIStilling = Read-Host "Hvor mange personer i" $AnsattStillinger[$i] #Spor hvor mange det skal vare i en stilling
             $lagdeAnsatte += $AntallIStilling
-            $ansatteIgjen = $antallAnsatte - $lagdeAnsatte
-            $string = "Du har "
-            $string += write-Output $ansatteIgjen
-            $string += " ansatte igjen a tildele plass!"
+            $string = "Du har forelopig tildelt "
+            $string += write-Output $lagdeAnsatte
+            $string += " personer en OU"
             write-Output $string
-
-            foreach ($j in 0..$AntallIStilling) { # Lager random ansatte for sa mange brukeren har inputtet
+            foreach ($j in 1..$AntallIStilling) { # Lager random ansatte for sa mange brukeren har inputtet
+                $uniktTall++
                 $fn = Get-Random -Minimum -0 -Maximum 100
                 $ln = Get-Random -Minimum -0 -Maximum 100
-                $UserName          = $FirstName[$fn].ToLower()
+                $UserName          = $FirstName[$fn].ToLower() + $uniktTall
                 $GivenName         = $FirstName[$fn]
                 $SurName           = $LastName[$ln]
-                $UserPrincipalName = $UserName + '@' + 'micron.soft'
+                $UserPrincipalName = $UserName + $Surname + $uniktTall + '@' + 'micron.soft'
                 $DisplayName       = $GivenName + ' ' + $SurName
-                $Password          = -join ('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ0123456789!"#$%&()*+,-./:<=>?@[\]_{|}'.ToCharArray() | Get-Random -Count 16)
+                $Password          = -join ('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ0123456789!"#$%&()*+,-./:<=>?@[\]_{|}'.ToCharArray() | Get-Random -Count 20)
                 $Department        = ($OrgUnits[$i] -split '[=,]')[1]
                 $Path              = $OrgUnits[$i] + ',' + "dc=micron,dc=soft"
                 # Legger til brukerinformasjon i new bruker
@@ -72,6 +68,6 @@ while($lagdeAnsatte -lt $antallAnsatte ){
                 Write-Output "$UserName;$GivenName;$SurName;$UserPrincipalName;$DisplayName;$Password;$Department;$Path" >> micronsoftusers.csv
             }
         }
-    }
-}
+    } # Problem:: Det blir lagt en ekstra bruker inn i hver OU. dett skal ikke skje. fisk daniel
+
 
