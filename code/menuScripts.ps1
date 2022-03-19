@@ -1,4 +1,4 @@
-#Main menu, where all the scripts are run from
+﻿#Main menu, where all the scripts are run from
 #Different ps1 script found in /code/. folder
 
 function Get-Meny
@@ -17,9 +17,9 @@ $svar = 'J'
 while($svar -eq 'J')
 {
 
-	Get-Meny;	
+	Get-Meny;
 	$kommando = Read-Host "Hvilket nummer vil du gjøre:"
-	
+
 	$result = switch ( $kommando )
 	{
     		1 { ./CreateOU.ps1 }
@@ -27,15 +27,9 @@ while($svar -eq 'J')
     		3 { ./deleteAllUsers.ps1 }
     		4 { ./ConnectPSSession.ps1 }
     		5 { ./ImportSecurityBaseline.ps1 }
-    		6 { Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Datakriger101/PS_scripts/main/startup.ps1')) }
     		default { write-output "nothing happens"}
 	}
 
-	$result 
+	$result
 	$svar = Read-Host "\nVil du gjøre noe mer (J/n):"
 }
-
-
-#https://raw.githubusercontent.com/Datakriger101/PS_scripts/main/startup.ps1
-
-#iex ((New-Object System.Net.WebClient).DownloadString('https://raw.githubusercontent.com/Datakriger101/PS_scripts/main/startup.ps1'))

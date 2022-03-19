@@ -1,5 +1,5 @@
 validate:
   image: gossin/secsrv-cicd:2112
   script:
-    - pwsh -Command 'Invoke-ScriptAnalyzer -EnableExit code/*.ps1'
+    - pwsh -Command 'Invoke-ScriptAnalyzer -EnableExit code/*.ps1 -Exclude PSAvoidUsingConvertToSecureStringWithPlainText '
 
