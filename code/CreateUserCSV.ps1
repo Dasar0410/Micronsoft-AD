@@ -43,7 +43,6 @@ $LastName = @("Pietrzykowski","Sarjomaa","Refsgaard","Raanes","Abu-bakhr","Al-An
     $uniktTall = 0
 	Write-Output "UserName;GivenName;SurName;UserPrincipalName;DisplayName;Password;Department;Path" > micronsoftusers.csv
     foreach ($i in 0..5) { # Gar gjennom alle stillinger i firmaet og leser inn antall ansatte
-        
         if ($lagdeAnsatte -lt $antallAnsatte ){
             $AntallIStilling = Read-Host "Hvor mange personer i" $AnsattStillinger[$i] #Spor hvor mange det skal vare i en stilling
             $lagdeAnsatte += $AntallIStilling

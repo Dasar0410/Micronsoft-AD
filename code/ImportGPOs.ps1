@@ -6,7 +6,7 @@ curl 'https://codeload.github.com/HaraldMR/DCSG1005downloadfork/legacy.zip/main'
 
 7z x '.\main.zip'
 Set-Location '.\HaraldMR-DCSG1005downloadfork-b80d563\GPOs\Scripts'
-Get-GPO -All | Format-Table -Property displayname 
+Get-GPO -All | Format-Table -Property displayname
 .\Baseline-ADImport.ps1
 Get-GPO -All | Format-Table -Property displayname
 
