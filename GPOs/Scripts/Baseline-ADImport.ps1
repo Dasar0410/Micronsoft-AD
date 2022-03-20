@@ -1,6 +1,6 @@
-﻿#
-# Import all GPOs in this baseline into Active Directory Group Policy
-#
+﻿# Import all GPOs in this baseline into Active Directory Group Policy
+# Dette scriptet er hentet fra Microsoft sitt Security baseline import script,
+# endret slik at det funker i vårt filsystem.
 
 $GpoMap = .\MapGuidsToGpoNames.ps1 ..\GPOer
 
