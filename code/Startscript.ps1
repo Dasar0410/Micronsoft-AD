@@ -1,5 +1,5 @@
 # installerer 7zip, git repo og starter meny.
-# Git repo er lagt på en public github for enkel nedlastning.
+# Git repo er lagt pa en public github for enkel nedlastning.
 
 choco install -y 7zip
 Set-Location 'C:\Users\Administrator'
