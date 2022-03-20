@@ -1,4 +1,7 @@
 ﻿<#
+
+Dette scriptet er også hentet fra Microstoft security baseline toolkit 1.0, og er tilpasset.
+
 .SYNOPSIS
 Map GUIDs in a GPO backup to GPO display names
 
