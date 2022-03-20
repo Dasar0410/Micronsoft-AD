@@ -72,9 +72,10 @@ micron.soft
     - 
 
 - *`GPO`* 
-    - GPO var noe gruppen var litt usikker på når vi startet på prosjektet, så vi bestemte oss for å finne en god løsning når vi hadde fått det andre grunnleggende på plass. Da vi først startet hadde vi planlagt å bare laste ned noen (grunnleggende/ standard) GPOer og editere de slik at de passer våre OUer. Dette fungerte ikke. Løsnigen ble her å manuelt lage egen GPO som skulle lastes ned for domenet og lokalt for de forskjellige hostene. 
-    - Microsoft sin Security Baseline var en vi vurdert. Problemet var at vi her ikke hadde muligheten til å endre GPOene slik vi ville.
-    - Vi fant også en [nettside](https://admx.help/) som simplifiserte hele prosessen med å lage GPOer. Denne nettsiden bestod av templates for ulike GPOer og gjorde at enkelt kunne sette sammen egne GPOer. Vi fant 
+    - GPO var noe gruppen var litt usikker på når vi startet på prosjektet, så vi bestemte oss for å finne en god løsning når vi hadde fått det andre grunnleggende på plass. Da vi først startet hadde vi planlagt å bare laste ned noen (grunnleggende/ standard) GPOer og editere de slik at de passer våre OUer. Dette fungerte ikke. Løsnigen ble her å manuelt lage egene GPOer som skulle lastes ned for domenet.
+    - Microsoft sin Security Baseline var en vi vurdert. Problemet var at vi her ikke hadde muligheten til å endre GPOene slik vi ville, spcritps som fulgte med i baseline toolkitet ble brukt, ettersom disse hjalp mye med å få importert en stor mengde GPOer fra en backup.
+    - Til slutt ble det laget omtrent 20 ulike gpoer som gjorde en ting per object. Feks vil Adm Bakrunn bare sette bakrunn for administrasjons brukere, ikke noe mer. Alle disse ble det gjort en backup av og lastet opp i git repoet slik at man kunne enkelt hente de ved hjelp av GPO scripts.
+    - Et siste problem her var at det var problematisk å sjekke om ulike GPOer overskrev hverandre, feks hadde vi flere GPOer som var satt til alle brukerene som feks hindret brukeren i å bruke controllpanelet. Dette ville vært upopulært for IT brukere, så vi har en IT GPO som skruv av denne funksjonen. Om IT brukerene fikk all users GPOen eller ikke var vanskelig å se. Men ved å flytte brukere litt rundt så var det mulig å logge inn på feks admin brukeren på CL1 etter å ha flyttet brukeren til IT gruppen, og sjekke om den hadde tilgang til controll panelet.
 
 - *`UPN - The operation end because UPN value not uniqe`*
     - [UPN](https://www.codetwo.com/kb/upn/) står for "User Principal Name" og er en error melding som oppstår når brukernavnene i systemet ikke er unike. I vår sammenheng er det mailen som er problemet. Det er ikke alltid slik. 
