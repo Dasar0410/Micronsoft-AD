@@ -14,8 +14,3 @@ else {# Hvis alle brukere skal slettes
     Get-ADUser -SearchBase "OU=AllUsers, DC=micron, DC=soft" -Filter * | Remove-ADUser -Confirm #spor om konfirmasjon
     Write-Output "ALLE brukerne er slettet!"
 }
-
-
-
-
-
