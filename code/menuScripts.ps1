@@ -15,10 +15,8 @@ $svar = 'J'
 while($svar -eq 'J')
 {
 	Get-Meny;
-	do{
 	$kommando = Read-Host "\nVelg kommando fra meny [1-7]:"
-	} while($kommando -lt 1 && $kommando -gt 7)
-		$result = switch ( $kommando )
+	$result = switch ( $kommando )
 		{
 			1 { ./CreateOU.ps1 }
 			2 { ./ImportGPOs.ps1 }
