@@ -32,7 +32,6 @@ while($svar -eq 'J')
 			6 { ./ConnectPSSession.ps1 }
 			7 { ./ImportGPOs.ps1 }
 		}
-
 	$result
 	$svar = Read-Host "\nVil du gjore noe mer (J/n):"
 	Set-Location 'C:\Users\Administrator\HaraldMR-DCSG1005downloadfork*\code'
