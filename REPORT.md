@@ -2,7 +2,7 @@
   <img 
     width="1000"
     height="300"
-    src="https://i.imgur.com/cJRUMM3.png"
+    src="img/MicronsoftLogo.png"
   >
 </p>
 
@@ -30,7 +30,7 @@ Målet med oppgaven var å sette opp en Active Directory for en bedrift. Selskap
 
 **`Modellen for OU`**
 
-![Imgur](https://i.imgur.com/syYaqh0.png)
+![](img/ModelAllusers.png "Modellen for AllUsers")
 
 ```
 micron.soft
@@ -46,7 +46,7 @@ micron.soft
 ```
 
 ## Organisasjons-kart
-![Imgur](https://i.imgur.com/MQnpXEX.png)
+![](img/OrganizationChart.png "Dette er organisasjonskartet vårt")
 
 ## Utfordringer
 
