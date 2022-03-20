@@ -24,5 +24,3 @@ Get-GPO -Name "[IT] Allow software installations" | New-GPLink -Target "OU=IT,OU
 Get-GPO -Name "[IT] Bakgrunn" | New-GPLink -Target "OU=IT,OU=AllUsers,DC=micron,DC=soft"
 Get-GPO -Name "[IT] CMD on" | New-GPLink -Target "OU=IT,OU=AllUsers,DC=micron,DC=soft"
 Get-GPO -Name "[IT] Forced system restarts on" | New-GPLink -Target "OU=IT,OU=AllUsers,DC=micron,DC=soft"
-
-Set-Location 'C:\Users\Administrator'

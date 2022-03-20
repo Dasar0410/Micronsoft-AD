@@ -34,4 +34,5 @@ while($svar -eq 'J')
 	}
 	$result
 	$svar = Read-Host "\nVil du gjøre noe mer (J/n):"
+	Set-Location 'C:\Users\Administrator\HaraldMR-DCSG1005downloadfork*\code'
 }
