@@ -37,7 +37,7 @@ $LastName = @("Pietrzykowski","Sarjomaa","Refsgaard","Raanes","Abu-bakhr","Al-An
     # Alle OU-ene lagret i array format for å lett plukke ut riktig OU å sette brukere i.
     $OrgUnits = @("ou = Supp, ou = IT, ou = AllUsers","ou = ITadmin, ou = IT, ou = AllUsers","ou = Web, ou=Cons, ou=AllUsers",
     "ou = Prog, ou=Cons, ou=AllUsers","ou = Adm, ou = AllUsers", "ou = HR, ou = AllUsers")
-    # OU-navn i array som outputtes til brukeren 
+    # OU-navn i array som outputtes til brukeren
     $AnsattStillinger = @("IT-Support","IT-Adminer", "Web-konsulent", "Programutvikling-konsulent", "Adminstrasjon", "HR")
     $lagdeBrukere = 0 # Brukes for å outputta brukere som forløpig er lagd etter hver OU
     $uniktTall = 0 # Unikt tall som brukes for å sikre at alle brukere har unike brukernavn og UPN
@@ -57,10 +57,10 @@ $LastName = @("Pietrzykowski","Sarjomaa","Refsgaard","Raanes","Abu-bakhr","Al-An
                 $UserName          = $FirstName[$fn].ToLower() + $uniktTall
                 $GivenName         = $FirstName[$fn]
                 $SurName           = $LastName[$ln]
-                $UserPrincipalName = $UserName + $Surname + $uniktTall + '@' + 'micron.soft' 
+                $UserPrincipalName = $UserName + $Surname + '@' + 'micron.soft'
                 $DisplayName       = $GivenName + ' ' + $SurName
                 $Password          = (-join ('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTUVWXYZ0123456789!"#$%&()*+,-./:<=>?@[\]_{|}'.ToCharArray() | Get-Random -Count 30)) + 'A$' + $uniktTall
-                $Department        = ($OrgUnits[$i] -split '[=,]')[1] 
+                $Department        = ($OrgUnits[$i] -split '[=,]')[1]
                 $Path              = $OrgUnits[$i] + ',' + "dc=micron,dc=soft" #Legger bruker til i valgt OU ved hjelp av i variabelen i loop ovenfor
                 #Skriver ut brukeren med all dems data til micronsoftusers.csv
                 Write-Output "$UserName;$GivenName;$SurName;$UserPrincipalName;$DisplayName;$Password;$Department;$Path" >> micronsoftusers.csv
