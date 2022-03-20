@@ -19,10 +19,9 @@ while($svar -eq 'J')
 	Get-Meny;
 	do{
 	$kommando = Read-Host "Hvilken opsjon velger du (1-7):"
-
 	} while($kommando -lt 1 && $kommando -gt 7)
 
-		$result = switch ( $kommando )
+	$result = switch ( $kommando )
 		{
 			1 { ./CreateOU.ps1 }
 			2 { ./CreateUsers.ps1 }
