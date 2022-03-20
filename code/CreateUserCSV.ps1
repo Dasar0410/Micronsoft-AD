@@ -39,18 +39,18 @@ $LastName = @("Pietrzykowski","Sarjomaa","Refsgaard","Raanes","Abu-bakhr","Al-An
     "ou = Prog, ou=Cons, ou=AllUsers","ou = Adm, ou = AllUsers", "ou = HR, ou = AllUsers")
     # OU-navn i array som outputtes til brukeren
     $AnsattStillinger = @("IT-Support","IT-Adminer", "Web-konsulent", "Programutvikling-konsulent", "Adminstrasjon", "HR")
-    $lagdeBrukere = 0 # Brukes for å outputta brukere som forløpig er lagd etter hver OU
+    $lagdeBrukere = 0 # Brukes for å outputta brukere som forlopig er lagd etter hver OU
     $uniktTall = 0 # Unikt tall som brukes for å sikre at alle brukere har unike brukernavn og UPN
-    #Skriver først formatet til csv filen
+    #Skriver forst formatet til csv filen
 	Write-Output "UserName;GivenName;SurName;UserPrincipalName;DisplayName;Password;Department;Path" > micronsoftusers.csv
     foreach ($i in 0..5) { # Gar gjennom alle OU-er i firmaet
-            $AntallIStilling = Read-Host "Hvor mange personer i" $AnsattStillinger[$i] #Spør hvor mange brukere som skal lages i nåværende OU
+            $AntallIStilling = Read-Host "Hvor mange personer i" $AnsattStillinger[$i] #Spor hvor mange brukere som skal lages i nåvaerende OU
             $lagdeBrukere += $AntallIStilling
             $string = "Du har forelopig tildelt "
             $string += write-Output $lagdeBrukere
             $string += " personer en OU"
             Write-Output $string
-            foreach ($j in 1..$AntallIStilling) { # Lager x antall randomiza brukere ettersom hva programkjører valgte
+            foreach ($j in 1..$AntallIStilling) { # Lager x antall randomiza brukere ettersom hva programkjorer valgte
                 $uniktTall++ #plusser på unike tallet for hver bruker som blir lagd
                 $fn = Get-Random -Minimum -0 -Maximum 100 #firstname
                 $ln = Get-Random -Minimum -0 -Maximum 100 #lastname
