@@ -34,24 +34,24 @@ $LastName = @("Pietrzykowski","Sarjomaa","Refsgaard","Raanes","Abu-bakhr","Al-An
               "Helland","Boe","Jenssen","Aune","Mikkelsen","Tveit","Brekke",
               "Abrahamsen","Madsen"
              )
-    # Alle OU-ene lagret i array format for å lett plukke ut riktig OU å sette brukere i.
+    # Alle OU-ene lagret i array format for a lett plukke ut riktig OU a sette brukere i.
     $OrgUnits = @("ou = Supp, ou = IT, ou = AllUsers","ou = ITadmin, ou = IT, ou = AllUsers","ou = Web, ou=Cons, ou=AllUsers",
     "ou = Prog, ou=Cons, ou=AllUsers","ou = Adm, ou = AllUsers", "ou = HR, ou = AllUsers")
     # OU-navn i array som outputtes til brukeren
     $AnsattStillinger = @("IT-Support","IT-Adminer", "Web-konsulent", "Programutvikling-konsulent", "Adminstrasjon", "HR")
-    $lagdeBrukere = 0 # Brukes for å outputta brukere som forlopig er lagd etter hver OU
-    $uniktTall = 0 # Unikt tall som brukes for å sikre at alle brukere har unike brukernavn og UPN
+    $lagdeBrukere = 0 # Brukes for a outputta brukere som forlopig er lagd etter hver OU
+    $uniktTall = 0 # Unikt tall som brukes for a sikre at alle brukere har unike brukernavn og UPN
     #Skriver forst formatet til csv filen
 	Write-Output "UserName;GivenName;SurName;UserPrincipalName;DisplayName;Password;Department;Path" > micronsoftusers.csv
     foreach ($i in 0..5) { # Gar gjennom alle OU-er i firmaet
-            $AntallIStilling = Read-Host "Hvor mange personer i" $AnsattStillinger[$i] #Spor hvor mange brukere som skal lages i nåvaerende OU
+            $AntallIStilling = Read-Host "Hvor mange personer i" $AnsattStillinger[$i] #Spor hvor mange brukere som skal lages i navaerende OU
             $lagdeBrukere += $AntallIStilling
             $string = "Du har forelopig tildelt "
             $string += write-Output $lagdeBrukere
             $string += " personer en OU"
             Write-Output $string
             foreach ($j in 1..$AntallIStilling) { # Lager x antall randomiza brukere ettersom hva programkjorer valgte
-                $uniktTall++ #plusser på unike tallet for hver bruker som blir lagd
+                $uniktTall++ #plusser pa unike tallet for hver bruker som blir lagd
                 $fn = Get-Random -Minimum -0 -Maximum 100 #firstname
                 $ln = Get-Random -Minimum -0 -Maximum 100 #lastname
                 $UserName          = $FirstName[$fn].ToLower() + $uniktTall
