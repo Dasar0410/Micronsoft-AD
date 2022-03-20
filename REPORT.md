@@ -13,6 +13,7 @@
 - [Gruppe Medlemmer](#gruppe-medlemmer)
 - [Domene Model](#domene-model)
 - [Problemer](#problemer)
+- [Organisasjonskart](#organisasjons-kart)
 
 
 ## Introduksjon
@@ -25,7 +26,7 @@ Målet med oppgaven var å sette opp en Active Directory for en bedrift. Selskap
 - Harald Martin Raanes
 - Eskil Lykke Refsgaard
 
-## Domene-model
+## Domene-modell
 
 **`Modellen for OU`**
 
@@ -43,6 +44,9 @@ micron.soft
         └── ITAdmin
         └── Supp
 ```
+
+## Organisasjons-kart
+![Imgur](https://i.imgur.com/MQnpXEX.png)
 
 ## Utfordringer
 
