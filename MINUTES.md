@@ -7,7 +7,7 @@
 
 
 ### Meeting nr. 1 
-### Dato: `08.03.2022`, Varighet: `7 timer`
+### Dato: `08.03.2022`, Varighet: `7 timer`, Lokasjon: `Atriet`
 ### *Agenda:*
 - Fordele arbeidsoppgaver
 - Roller
@@ -34,7 +34,7 @@
 
 ---
 ### Meeting nr. 2 
-### Dato: `10.03.2022`,  Varighet : `7 timer`
+### Dato: `10.03.2022`,  Varighet : `7 timer`, Lokasjon: `Atriet`
 #### *Agenda:*
 - Fungerer alt som det skal?
 - Problemer
@@ -62,7 +62,7 @@
 
 ---
 ### Meeting nr. 3 
-### Dato: `15.03.2022`,  Varighet : `8 timer`
+### Dato: `15.03.2022`,  Varighet : `7 timer`, Lokasjon: `Atriet`
 #### *Agenda:*
 - Ble arbeidsoppgavene fullført?
 - Fordele ut nye arbeidsoppgaver
@@ -72,7 +72,7 @@
     - Importere MSFT Security Baseline to GPO
     - Velge hvor mange brukere man ønsker å legge til hver OU
     - Skrive på REPORT.md
-    - Se mere på error meldingene vi får via Script Analyzer
+    - Se på error meldingene vi får via Script Analyzer
 
 
 ### *Plan for videre arbeid:*
@@ -84,7 +84,7 @@
     >Jobbe videre med GPO, bra oppsett
 
 ### Meeting nr. 4 
-### Dato: `16.03.2022`,  Varighet : `4 timer`
+### Dato: `16.03.2022`,  Varighet : `4 timer`, Lokasjon: `Grupperom Topas`
 #### *Agenda:*
 - Hva er prioritet før innlevering?
 - Ble arbeidsoppgavene fullført?
@@ -95,8 +95,6 @@
 1. Planlegge videre arbeid
 2. Arbeid - scripts
     - Fix: Opprette alle brukere
-
-
 
 ### *Plan for videre arbeid:*
 - *Daniel:* 
@@ -111,12 +109,32 @@
 
 
 ### Meeting nr. 5 
-### Dato: `18.03.2022`,  Varighet : `4 timer`
+### Dato: `18.03.2022`,  Varighet : `4 timer`, Lokasjon: `Atriet`
 #### *Agenda:*
 - Ble arbeidsoppgavene fullført?
 - Fordele ut nye arbeidsoppgaver
 - Hva trenger å gjøres før innleveringsfristen? 
 
+### `Hva vi gjorde:`
+
+1. Planlegge hva som som gjøres
+2. Skrive på REPORT.md
+3. Mulighet for å slette GPOer script
+4. Feilrettinger ved opprettelse av brukere
+5. Fikse alle feil rettet mot script analyzer
+
+### Meeting nr. 6
+### Dato: `20.03.2022`,  Varighet : `4 timer`, Lokasjon: `Discord`
+#### *Agenda:*
+- Siste feilrettinger
+- Skrive på rapport
+- Spille inn video
+
+### `Hva vi gjorde:`
+1. Siste feilrettinger
+2. Retter opp i warnings fra pipeline
+3. REPORT.md
+4. Spille inn video
 
 ## Roller
 **Daniel:** Leder, programmerer.
