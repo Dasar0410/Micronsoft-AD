@@ -45,11 +45,6 @@ $LastName = @("Pietrzykowski","Sarjomaa","Refsgaard","Raanes","Abu-bakhr","Al-An
 	Write-Output "UserName;GivenName;SurName;UserPrincipalName;DisplayName;Password;Department;Path" > micronsoftusers.csv
     foreach ($i in 0..5) { # Gar gjennom alle OU-er i firmaet
             $AntallIStilling = Read-Host "Hvor mange personer i" $AnsattStillinger[$i] #Spor hvor mange brukere som skal lages i navaerende OU
-            $lagdeBrukere += $AntallIStilling
-            $string = "Du har forelopig tildelt "
-            $string += write-Output $lagdeBrukere
-            $string += " personer en OU"
-            Write-Output $string
             foreach ($j in 1..$AntallIStilling) { # Lager x antall randomiza brukere ettersom hva programkjorer valgte
                 $uniktTall++ #plusser pa unike tallet for hver bruker som blir lagd
                 $fn = Get-Random -Minimum -0 -Maximum 100 #firstname
