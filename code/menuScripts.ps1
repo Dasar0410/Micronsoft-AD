@@ -3,7 +3,6 @@
 
 function Get-Meny
 {
-	Write-Output "\n\n"
 	Write-Output " - Create OUs (1)"
 	Write-Output " - Create All Users(2)"
 	Write-Output " - Create single user (3)"
@@ -19,8 +18,8 @@ while($svar -eq 'J')
 {
 	Get-Meny;
 	do{
-	$kommando = Read-Host "Hvilken opsjon velger du (1-6):"
-	} while($kommando -lt 0 || $kommando -gt 6)
+	$kommando = Read-Host "Hvilken opsjon velger du (1-7):"
+	} while($kommando -lt 1 || $kommando -gt 7)
 	$result = switch ( $kommando )
 	{
     		1 { ./CreateOU.ps1 }
@@ -30,9 +29,8 @@ while($svar -eq 'J')
     		5 { ./DeleteUsers.ps1 }
     		6 { ./ConnectPSSession.ps1 }
     		7 { ./ImportGPOs.ps1 }
-    		default { write-output "nothing happens"}
 	}
 	$result
-	$svar = Read-Host "\nVil du gjøre noe mer (J/n):"
+	$svar = Read-Host "\nVil du gjore noe mer (J/n):"
 	Set-Location 'C:\Users\Administrator\HaraldMR-DCSG1005downloadfork*\code'
 }
