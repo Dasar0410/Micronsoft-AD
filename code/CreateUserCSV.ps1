@@ -1,5 +1,5 @@
 # 100 unike fornavn
-$FirstName = @("Josefine","Emma","Ella","Maja","Olivia","Emilie","Sofie","Leah",
+$FirstName = @("Josefine","Emma","Ella","Maja","Olivia","Emilie","Sofie","Leah", #Mye av koden her er hentet fra https://gitlab.com/erikhje/heat-mono/-/raw/master/scripts/CreateUserCSV.ps1
                "Sofia","Ingrid","Frida","Sara","Tiril","Selma","Ada","Hedda",
                "Dani","Anna","Alma","Eva","Mia","Thea","Live","Ida","Astrid",
                "Ellinor","Vilde","Linnea","Iben","Aurora","Mathilde","Jenny",
