@@ -1,5 +1,5 @@
 # 100 unike fornavn
-$FirstName = @("Josefine","Emma","Ella","Maja","Olivia","Emilie","Sofie","Leah",
+$FirstName = @("Josefine","Emma","Ella","Maja","Olivia","Emilie","Sofie","Leah", #Mye av koden her er hentet fra https://gitlab.com/erikhje/heat-mono/-/raw/master/scripts/CreateUserCSV.ps1
                "Sofia","Ingrid","Frida","Sara","Tiril","Selma","Ada","Hedda",
                "Dani","Anna","Alma","Eva","Mia","Thea","Live","Ida","Astrid",
                "Ellinor","Vilde","Linnea","Iben","Aurora","Mathilde","Jenny",
@@ -39,17 +39,11 @@ $LastName = @("Pietrzykowski","Sarjomaa","Refsgaard","Raanes","Abu-bakhr","Al-An
     "ou = Prog, ou=Cons, ou=AllUsers","ou = Adm, ou = AllUsers", "ou = HR, ou = AllUsers")
     # OU-navn i array som outputtes til brukeren
     $AnsattStillinger = @("IT-Support","IT-Adminer", "Web-konsulent", "Programutvikling-konsulent", "Adminstrasjon", "HR")
-    $lagdeBrukere = 0 # Brukes for a outputta brukere som forlopig er lagd etter hver OU
     $uniktTall = 0 # Unikt tall som brukes for a sikre at alle brukere har unike brukernavn og UPN
     #Skriver forst formatet til csv filen
 	Write-Output "UserName;GivenName;SurName;UserPrincipalName;DisplayName;Password;Department;Path" > micronsoftusers.csv
     foreach ($i in 0..5) { # Gar gjennom alle OU-er i firmaet
             $AntallIStilling = Read-Host "Hvor mange personer i" $AnsattStillinger[$i] #Spor hvor mange brukere som skal lages i navaerende OU
-            $lagdeBrukere += $AntallIStilling
-            $string = "Du har forelopig tildelt "
-            $string += write-Output $lagdeBrukere
-            $string += " personer en OU"
-            Write-Output $string
             foreach ($j in 1..$AntallIStilling) { # Lager x antall randomiza brukere ettersom hva programkjorer valgte
                 $uniktTall++ #plusser pa unike tallet for hver bruker som blir lagd
                 $fn = Get-Random -Minimum -0 -Maximum 100 #firstname

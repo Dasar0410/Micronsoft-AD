@@ -11,6 +11,6 @@ if ($valg -eq 1){ # Hvis en bruker skal slettes
 }
 else {# Hvis alle brukere skal slettes
     Write-Output "Sletter ALLE brukere..."
-    Get-ADUser -SearchBase "OU=AllUsers, DC=micron, DC=soft" -Filter * | Remove-ADUser -Confirm #spor om konfirmasjon
+    Get-ADUser -SearchBase "OU=AllUsers, DC=micron, DC=soft" -Filter * | Remove-ADUser -Confirm:$false
     Write-Output "ALLE brukerne er slettet!"
 }
