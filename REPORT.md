@@ -46,7 +46,7 @@ micron.soft
 ```
 
 ## Organisasjons-kart
-![](img/OrganizationChart.png "Dette er organisasjonskartet vårt")
+![](img/OrganizationCh.png "Dette er organisasjonskartet vårt")
 
 ## Utfordringer
 
